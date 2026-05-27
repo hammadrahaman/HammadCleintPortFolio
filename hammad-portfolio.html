@@ -191,20 +191,85 @@ nav.scrolled{padding:0.7rem var(--pad-x);background:rgba(250,247,242,0.97);box-s
 .stat-num sup{font-size:0.85rem;color:var(--sage2)}
 .stat-label{font-size:0.66rem;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;white-space:nowrap}
 
-/* AVATAR */
+/* PORTRAIT — professional photo */
 .hero-visual{display:flex;justify-content:center;align-items:center;position:relative;z-index:2;animation:fadeIn 1s 0.5s ease both}
-.avatar-scene{position:relative;width:clamp(220px,28vw,320px);aspect-ratio:1}
-.av-ring{position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(124,154,126,0.15);animation:slowSpin 28s linear infinite}
-.av-pip{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--sage);top:0;left:50%;transform:translateX(-50%);box-shadow:0 0 8px rgba(124,154,126,0.5)}
-.av-ring2{position:absolute;inset:-2px;border-radius:50%;border:1.5px solid rgba(124,154,126,0.18)}
-.av-glow{position:absolute;inset:8px;border-radius:50%;background:rgba(124,154,126,0.07);filter:blur(18px)}
-.av-frame{width:100%;height:100%;border-radius:50%;border:2px solid rgba(124,154,126,0.2);padding:6px;background:var(--cream2)}
-.av-frame img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
-.av-fallback{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--cream3),var(--warm));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:4rem;font-weight:600;color:var(--sage2)}
-.ftag{position:absolute;font-family:var(--mono);font-size:0.6rem;color:var(--sage2);border:1px solid rgba(124,154,126,0.25);padding:0.26rem 0.7rem;border-radius:2rem;background:rgba(250,247,242,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);letter-spacing:0.05em;box-shadow:0 2px 10px rgba(44,36,32,0.07);white-space:nowrap}
-.ft1{bottom:-6px;left:-20px;animation:flt 5s ease-in-out infinite}
-.ft2{top:15px;right:-26px;animation:flt 5s 1.8s ease-in-out infinite}
-@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.portrait-scene{
+  position:relative;
+  width:clamp(260px,32vw,380px);
+  aspect-ratio:3/4;
+}
+.p-glow{
+  position:absolute;inset:-30px;border-radius:1.5rem;
+  background:radial-gradient(circle at center,rgba(124,154,126,0.18) 0%,transparent 60%);
+  filter:blur(28px);z-index:0;
+  animation:gentleGlow 5s ease-in-out infinite;
+}
+@keyframes gentleGlow{
+  0%,100%{opacity:0.7;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.04)}
+}
+.p-deco-line{
+  position:absolute;inset:-14px;border-radius:1.25rem;
+  border:1px solid rgba(124,154,126,0.18);
+  z-index:1;
+  animation:fadeIn 1.2s 0.8s ease both;
+}
+.p-deco-corner{
+  position:absolute;width:32px;height:32px;
+  border:1.5px solid var(--sage2);z-index:1;
+  animation:fadeIn 1.2s 1s ease both;
+}
+.p-deco-corner.tl{top:-8px;left:-8px;border-right:none;border-bottom:none;border-radius:0.6rem 0 0 0}
+.p-deco-corner.br{bottom:-8px;right:-8px;border-left:none;border-top:none;border-radius:0 0 0.6rem 0}
+.p-frame{
+  position:relative;z-index:2;
+  width:100%;height:100%;
+  border-radius:1rem;overflow:hidden;
+  background:linear-gradient(135deg,var(--cream2),var(--warm));
+  box-shadow:
+    0 20px 60px rgba(44,36,32,0.18),
+    0 8px 24px rgba(44,36,32,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.5);
+  transform:rotate(-1.5deg);
+  transition:transform 0.6s cubic-bezier(.2,.7,.3,1);
+}
+.p-frame:hover{transform:rotate(0deg) scale(1.02)}
+.p-frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 18%;
+  display:block;
+}
+.p-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:5rem;font-weight:600;color:var(--sage2)}
+
+/* FLOATING TAGS — repositioned around the portrait */
+.ftag{
+  position:absolute;z-index:3;
+  font-family:var(--mono);font-size:0.62rem;color:var(--sage2);
+  border:1px solid rgba(124,154,126,0.25);
+  padding:0.4rem 0.85rem;border-radius:2rem;
+  background:rgba(250,247,242,0.96);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  letter-spacing:0.05em;
+  box-shadow:0 4px 16px rgba(44,36,32,0.08);
+  white-space:nowrap;
+  font-weight:500;
+}
+.ft1{
+  bottom:14%;left:-22px;
+  animation:flt 5s ease-in-out infinite;
+}
+.ft2{
+  top:8%;right:-30px;
+  animation:flt 5s 1.8s ease-in-out infinite;
+}
+.ft3{
+  bottom:-12px;right:18%;
+  animation:flt 5s 3.2s ease-in-out infinite;
+  color:var(--terra);
+  border-color:rgba(196,133,106,0.3);
+}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
 /* ── TRUST BAR ── */
 .trust-bar{
@@ -475,8 +540,8 @@ footer{padding:1.5rem var(--pad-x);border-top:1px solid var(--border);display:fl
 /* Tablet & smaller desktop */
 @media(max-width:1024px){
   .hero{grid-template-columns:1fr 1fr;gap:2rem;padding-top:7rem}
-  .avatar-scene{width:clamp(200px,30vw,260px)}
-  .ft1,.ft2{font-size:0.55rem;padding:0.22rem 0.6rem}
+  .portrait-scene{width:clamp(220px,32vw,300px)}
+  .ft1,.ft2,.ft3{font-size:0.55rem;padding:0.3rem 0.65rem}
 }
 
 /* Mobile breakpoint — switch to hamburger */
@@ -496,8 +561,12 @@ footer{padding:1.5rem var(--pad-x);border-top:1px solid var(--border);display:fl
     min-height:auto;
   }
   .hero-visual{order:-1;margin-bottom:0.5rem}
-  .avatar-scene{width:min(220px,55vw)}
-  .ftag{font-size:0.58rem}
+  .portrait-scene{width:min(190px,48vw)}
+  .ftag{font-size:0.55rem;padding:0.28rem 0.65rem}
+  .ft1{left:-12px}
+  .ft2{right:-15px}
+  .ft3{right:8%;bottom:-8px}
+  .p-deco-corner{width:24px;height:24px}
 
   .hero-ctas{gap:0.6rem}
   .btn-primary,.btn-terra,.btn-ghost{padding:0.78rem 1.4rem;font-size:0.75rem;flex:1 1 auto;min-width:140px}
@@ -615,17 +684,19 @@ footer{padding:1.5rem var(--pad-x);border-top:1px solid var(--border);display:fl
     </div>
   </div>
   <div class="hero-visual">
-    <div class="avatar-scene">
-      <div class="av-glow"></div>
-      <div class="av-ring"><div class="av-pip"></div></div>
-      <div class="av-ring2"></div>
-      <div class="av-frame">
-        <img src="https://hammadrahaman.github.io/HammadCV/Teams-Pic.jpeg" alt="Hammad Rahaman"
+    <div class="portrait-scene">
+      <div class="p-glow"></div>
+      <div class="p-deco-line"></div>
+      <div class="p-deco-corner tl"></div>
+      <div class="p-deco-corner br"></div>
+      <div class="p-frame">
+        <img src="hammad-professional.jpg" alt="Hammad Rahaman — Senior QA Engineer"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="av-fallback" style="display:none">HR</div>
+        <div class="p-fallback" style="display:none">HR</div>
       </div>
-      <div class="ftag ft1">🚀 2 live products</div>
-      <div class="ftag ft2">✅ ISTQB Certified</div>
+      <div class="ftag ft1">✅ ISTQB Certified</div>
+      <div class="ftag ft2">🚀 7+ Years</div>
+      <div class="ftag ft3">📍 Bengaluru</div>
     </div>
   </div>
 </section>
