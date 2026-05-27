@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hammad Rahaman — QA Engineer & Web/App Builder</title>
+<meta name="description" content="Senior QA Engineer & freelance developer building web apps and mobile apps. Available for hire. Based in Bengaluru."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream:   #faf7f2;
+  --cream2:  #f5f0e8;
+  --cream3:  #ede6d8;
+  --warm:    #e8ddc8;
+  --surface: #ffffff;
+  --sage:    #7c9a7e;
+  --sage2:   #5a7a5c;
+  --sage3:   #3d5c3f;
+  --terra:   #c4856a;
+  --terra2:  #a86a50;
+  --gold:    #c9a84c;
+  --zish:    #e6541c;
+  --ink:     #2c2420;
+  --ink2:    #4a3f38;
+  --ink3:    #7a6e68;
+  --ink4:    #a89e98;
+  --border:  rgba(44,36,32,0.08);
+  --serif:   'Cormorant Garamond', serif;
+  --sans:    'Plus Jakarta Sans', sans-serif;
+  --mono:    'DM Mono', monospace;
+
+  --pad-x: clamp(1.25rem, 5vw, 6rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.75;overflow-x:hidden;min-height:100vh}
+img{max-width:100%;display:block}
+a{-webkit-tap-highlight-color:transparent}
+
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:1rem var(--pad-x);
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,247,242,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:padding 0.4s,background 0.4s,box-shadow 0.4s;
+  gap:1rem;
+}
+nav.scrolled{padding:0.7rem var(--pad-x);background:rgba(250,247,242,0.97);box-shadow:0 2px 24px rgba(44,36,32,0.06)}
+.nav-logo{
+  font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--ink);
+  font-style:italic;display:flex;align-items:baseline;gap:0.45rem;flex-shrink:0;
+  white-space:nowrap;
+}
+.nav-logo small{font-style:normal;font-family:var(--mono);font-size:0.6rem;color:var(--sage2);letter-spacing:0.05em;font-weight:400}
+
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:0.74rem;font-weight:500;text-decoration:none;color:var(--ink3);letter-spacing:0.08em;text-transform:uppercase;position:relative;transition:color 0.25s;padding:0.3rem 0}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.nav-links a:hover{color:var(--ink)}.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:var(--sage2);color:#fff !important;padding:0.55rem 1.25rem !important;border-radius:0.35rem;transition:background 0.25s !important;letter-spacing:0.06em !important}
+.nav-cta:hover{background:var(--sage3) !important}
+.nav-cta::after{display:none !important}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;
+  width:38px;height:38px;flex-shrink:0;
+  background:transparent;border:1px solid var(--border);
+  border-radius:0.45rem;cursor:pointer;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:5px;padding:0;
+  transition:background 0.25s,border-color 0.25s;
+  z-index:210;
+}
+.hamburger:hover{border-color:var(--sage)}
+.hamburger span{
+  display:block;width:18px;height:1.5px;
+  background:var(--ink);border-radius:2px;
+  transition:transform 0.35s ease,opacity 0.25s,background 0.25s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* MOBILE MENU OVERLAY */
+.mobile-menu{
+  position:fixed;inset:0;z-index:190;
+  background:var(--cream);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.5rem;padding:5rem 2rem 2rem;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.4s ease,visibility 0.4s ease;
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{
+  font-family:var(--serif);font-size:2rem;font-weight:600;
+  color:var(--ink);text-decoration:none;font-style:italic;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.4s ease,transform 0.4s ease,color 0.2s;
+}
+.mobile-menu.open a{opacity:1;transform:translateY(0)}
+.mobile-menu.open a:nth-child(1){transition-delay:0.1s}
+.mobile-menu.open a:nth-child(2){transition-delay:0.18s}
+.mobile-menu.open a:nth-child(3){transition-delay:0.26s}
+.mobile-menu.open a:nth-child(4){transition-delay:0.34s}
+.mobile-menu.open a:nth-child(5){transition-delay:0.42s}
+.mobile-menu a:hover{color:var(--sage2)}
+.mobile-menu a.cta{
+  font-family:var(--sans);font-size:0.9rem;font-style:normal;
+  background:var(--sage2);color:#fff;padding:0.85rem 2.2rem;
+  border-radius:0.4rem;letter-spacing:0.05em;
+  margin-top:1rem;font-weight:700;
+}
+.mobile-menu a.cta:hover{background:var(--sage3);color:#fff}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:1.1fr 0.9fr;
+  align-items:center;
+  padding:8rem var(--pad-x) 4rem;
+  position:relative;z-index:1;gap:3rem;
+}
+.hero-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.dc{position:absolute;border-radius:50%;border:1px solid rgba(124,154,126,0.1)}
+.dc1{width:min(600px,80vw);height:min(600px,80vw);top:-180px;right:-140px}
+.dc2{width:min(380px,60vw);height:min(380px,60vw);bottom:-80px;left:-80px;border-color:rgba(196,133,106,0.09)}
+.dc3{width:180px;height:180px;top:35%;right:32%;border-color:rgba(124,154,126,0.07);animation:slowSpin 50s linear infinite}
+@keyframes slowSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+.hero-content{position:relative;z-index:2}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-family:var(--mono);font-size:0.65rem;color:var(--sage2);
+  border:1px solid rgba(124,154,126,0.3);padding:0.35rem 0.9rem;
+  border-radius:2rem;letter-spacing:0.08em;margin-bottom:1.5rem;
+  background:rgba(124,154,126,0.06);animation:fadeUp 0.7s ease both;
+}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:bpulse 2.5s ease infinite;flex-shrink:0}
+@keyframes bpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.75)}}
+
+.hero-name{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,7vw,5rem);
+  line-height:1.0;font-weight:600;
+  margin-bottom:0.4rem;
+  animation:fadeUp 0.8s 0.1s ease both;
+  letter-spacing:-0.01em;
+}
+.hero-name em{color:var(--sage2);font-style:italic}
+.hero-rule{width:56px;height:1.5px;background:linear-gradient(90deg,var(--sage),var(--terra));margin:1rem 0;animation:expandW 0.9s 0.5s ease both;transform-origin:left}
+@keyframes expandW{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hero-role{font-size:0.78rem;font-weight:600;color:var(--ink3);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.85rem;animation:fadeUp 0.8s 0.2s ease both}
+
+.hero-value{
+  font-family:var(--serif);
+  font-size:clamp(1.2rem,2.5vw,1.55rem);
+  line-height:1.45;color:var(--ink);margin-bottom:1rem;font-weight:600;
+  animation:fadeUp 0.8s 0.25s ease both;
+}
+.hero-value em{color:var(--sage2);font-style:italic}
+
+.hero-desc{
+  font-size:clamp(0.86rem,1.4vw,0.95rem);
+  color:var(--ink3);max-width:480px;line-height:1.85;
+  margin-bottom:2rem;animation:fadeUp 0.8s 0.3s ease both;
+}
+.hero-ctas{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2.5rem;animation:fadeUp 0.8s 0.4s ease both}
+
+.btn-primary,.btn-terra,.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.82rem 1.7rem;font-family:var(--sans);font-weight:700;
+  font-size:0.78rem;text-decoration:none;border-radius:0.4rem;letter-spacing:0.04em;
+  transition:background 0.25s,transform 0.2s,box-shadow 0.25s,border-color 0.25s;
+  border:1.5px solid transparent;
+}
+.btn-primary{background:var(--sage2);color:#fff;box-shadow:0 4px 18px rgba(90,122,92,0.22)}
+.btn-primary:hover{background:var(--sage3);transform:translateY(-2px);box-shadow:0 8px 26px rgba(90,122,92,0.3)}
+.btn-terra{background:var(--terra);color:#fff;box-shadow:0 4px 18px rgba(196,133,106,0.22)}
+.btn-terra:hover{background:var(--terra2);transform:translateY(-2px);box-shadow:0 8px 26px rgba(196,133,106,0.3)}
+.btn-ghost{border-color:rgba(44,36,32,0.18);color:var(--ink2);font-weight:600}
+.btn-ghost:hover{border-color:var(--sage);background:rgba(124,154,126,0.06);transform:translateY(-2px)}
+
+.stats-row{display:flex;gap:clamp(1.5rem,4vw,2.8rem);animation:fadeUp 0.8s 0.5s ease both;flex-wrap:wrap}
+.stat-num{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.3rem);font-weight:600;color:var(--ink);line-height:1}
+.stat-num sup{font-size:0.85rem;color:var(--sage2)}
+.stat-label{font-size:0.66rem;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;white-space:nowrap}
+
+/* AVATAR */
+.hero-visual{display:flex;justify-content:center;align-items:center;position:relative;z-index:2;animation:fadeIn 1s 0.5s ease both}
+.avatar-scene{position:relative;width:clamp(220px,28vw,320px);aspect-ratio:1}
+.av-ring{position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(124,154,126,0.15);animation:slowSpin 28s linear infinite}
+.av-pip{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--sage);top:0;left:50%;transform:translateX(-50%);box-shadow:0 0 8px rgba(124,154,126,0.5)}
+.av-ring2{position:absolute;inset:-2px;border-radius:50%;border:1.5px solid rgba(124,154,126,0.18)}
+.av-glow{position:absolute;inset:8px;border-radius:50%;background:rgba(124,154,126,0.07);filter:blur(18px)}
+.av-frame{width:100%;height:100%;border-radius:50%;border:2px solid rgba(124,154,126,0.2);padding:6px;background:var(--cream2)}
+.av-frame img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.av-fallback{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--cream3),var(--warm));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:4rem;font-weight:600;color:var(--sage2)}
+.ftag{position:absolute;font-family:var(--mono);font-size:0.6rem;color:var(--sage2);border:1px solid rgba(124,154,126,0.25);padding:0.26rem 0.7rem;border-radius:2rem;background:rgba(250,247,242,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);letter-spacing:0.05em;box-shadow:0 2px 10px rgba(44,36,32,0.07);white-space:nowrap}
+.ft1{bottom:-6px;left:-20px;animation:flt 5s ease-in-out infinite}
+.ft2{top:15px;right:-26px;animation:flt 5s 1.8s ease-in-out infinite}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── TRUST BAR ── */
+.trust-bar{
+  background:var(--cream3);
+  padding:2.5rem var(--pad-x);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:2rem;border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.trust-item{display:flex;align-items:center;gap:0.85rem;min-width:0}
+.trust-icon{font-size:1.5rem;flex-shrink:0}
+.trust-text{font-size:0.8rem;color:var(--ink2);font-weight:500;line-height:1.4;min-width:0}
+.trust-text strong{display:block;font-size:0.92rem;color:var(--ink);margin-bottom:0.15rem}
+
+/* ── SERVICES STRIP ── */
+.services-strip{
+  background:var(--ink);color:#fff;
+  padding:5rem var(--pad-x);position:relative;z-index:1;overflow:hidden;
+}
+.services-strip::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(124,154,126,0.06);pointer-events:none}
+.strip-title{font-family:var(--serif);font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:600;margin-bottom:0.6rem;font-style:italic;color:var(--cream)}
+.strip-sub{font-size:0.86rem;color:rgba(250,247,242,0.6);margin-bottom:2.5rem;max-width:520px;line-height:1.8}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem}
+.svc-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
+  border-radius:1rem;padding:1.7rem;
+  transition:background 0.35s,border-color 0.35s,transform 0.35s;
+  position:relative;overflow:hidden;
+}
+.svc-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at top right,rgba(124,154,126,0.12),transparent 70%);
+  opacity:0;transition:opacity 0.4s;
+}
+.svc-card:hover{background:rgba(124,154,126,0.08);border-color:rgba(124,154,126,0.3);transform:translateY(-5px)}
+.svc-card:hover::before{opacity:1}
+.svc-icon{font-size:1.55rem;margin-bottom:0.9rem}
+.svc-name{font-weight:700;font-size:0.92rem;margin-bottom:0.5rem;color:var(--cream)}
+.svc-desc{font-size:0.79rem;color:rgba(250,247,242,0.55);line-height:1.8}
+.svc-tag{display:inline-block;margin-top:1rem;font-family:var(--mono);font-size:0.61rem;color:var(--sage);border:1px solid rgba(124,154,126,0.3);padding:0.18rem 0.6rem;border-radius:2rem;letter-spacing:0.06em}
+
+/* ── SECTIONS ── */
+section{padding:6rem var(--pad-x);position:relative;z-index:1}
+section+section{border-top:1px solid var(--border)}
+.sec-eyebrow{font-family:var(--mono);font-size:0.65rem;color:var(--sage2);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.85rem}
+.sec-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:3rem;font-weight:600;color:var(--ink)}
+.sec-title em{color:var(--sage2);font-style:italic}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.72s ease,transform 0.72s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ── BUILT PROJECTS ── */
+.built-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.75rem}
+.built-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:1.25rem;overflow:hidden;
+  transition:transform 0.4s ease,box-shadow 0.4s ease,border-color 0.4s ease;
+  display:flex;flex-direction:column;
+}
+.built-card:hover{transform:translateY(-7px);box-shadow:0 20px 50px rgba(44,36,32,0.09);border-color:rgba(124,154,126,0.28)}
+.bc-header{padding:1.75rem 1.75rem 1.25rem;position:relative;overflow:hidden}
+.bc-header.cafe{background:linear-gradient(135deg,#fff7ed,#fff1e3);border-bottom:1px solid var(--border)}
+.bc-header.quran{background:linear-gradient(135deg,#0d1f14,#163524)}
+
+/* ZISH CAFE LOGO */
+.zish-logo{
+  display:flex;align-items:center;gap:0.85rem;
+  padding:0.75rem 0;
+}
+.zish-icon{
+  width:54px;height:54px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.zish-cup{
+  width:46px;height:42px;position:relative;
+  border:3px solid var(--zish);
+  border-top:none;
+  border-radius:0 0 14px 14px;
+}
+.zish-cup::before{
+  content:'';position:absolute;
+  right:-14px;top:5px;
+  width:14px;height:18px;
+  border:3px solid var(--zish);border-left:none;
+  border-radius:0 16px 16px 0;
+}
+.zish-cup::after{
+  content:'';position:absolute;
+  top:-9px;left:50%;transform:translateX(-50%);
+  width:7px;height:7px;
+  background:#fca579;border-radius:50%;
+  box-shadow:0 -8px 0 -2px rgba(252,165,121,0.5);
+}
+.zish-steam{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  width:18px;height:14px;
+}
+.zish-steam span{
+  position:absolute;width:2px;height:8px;
+  background:var(--zish);opacity:0.5;border-radius:2px;
+  animation:steam 2.5s ease-in-out infinite;
+}
+.zish-steam span:nth-child(1){left:0;animation-delay:0s}
+.zish-steam span:nth-child(2){left:8px;animation-delay:0.4s;height:10px;top:-2px}
+.zish-steam span:nth-child(3){left:16px;animation-delay:0.8s}
+@keyframes steam{
+  0%,100%{opacity:0.3;transform:translateY(0)}
+  50%{opacity:0.7;transform:translateY(-3px)}
+}
+.zish-text{display:flex;flex-direction:column}
+.zish-name{
+  font-family:var(--sans);font-size:1.6rem;font-weight:700;
+  background:linear-gradient(90deg,#e6541c,#f97316);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;letter-spacing:-0.01em;
+}
+.zish-since{font-size:0.72rem;color:var(--ink3);font-weight:500;margin-top:0.25rem}
+
+.iqra-icon-wrap{
+  display:flex;align-items:center;gap:1rem;padding:0.5rem 0;
+}
+.iqra-app-icon{
+  width:64px;height:64px;border-radius:14px;
+  border:2px solid rgba(255,255,255,0.15);
+  background:linear-gradient(135deg,#2d4a35,#1a3024);
+  flex-shrink:0;object-fit:cover;
+}
+.iqra-name{color:#fff;font-family:var(--serif);font-size:1.4rem;font-weight:600;font-style:italic;line-height:1.1}
+.iqra-tag{color:rgba(255,255,255,0.5);font-size:0.72rem;font-family:var(--mono);letter-spacing:0.05em;margin-top:0.35rem}
+
+.bc-badges{display:flex;gap:0.45rem;flex-wrap:wrap;margin-top:1.25rem}
+.bc-badge{font-family:var(--mono);font-size:0.6rem;padding:0.22rem 0.65rem;border-radius:2rem;letter-spacing:0.05em;white-space:nowrap}
+.bc-badge.live{border:1px solid rgba(124,154,126,0.5);color:var(--sage2);background:rgba(124,154,126,0.08)}
+.bc-badge.play{border:1px solid rgba(196,133,106,0.45);color:var(--terra);background:rgba(196,133,106,0.08)}
+.bc-badge.dark{border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7)}
+.bc-badge.dark.live{border-color:rgba(124,154,126,0.5);color:var(--sage);background:rgba(124,154,126,0.1)}
+.bc-badge.dark.play{border-color:rgba(196,133,106,0.5);color:var(--terra);background:rgba(196,133,106,0.1)}
+
+.bc-body{padding:1.6rem 1.75rem 1.85rem;flex:1;display:flex;flex-direction:column}
+.bc-type{font-family:var(--mono);font-size:0.63rem;color:var(--sage2);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:0.5rem}
+.bc-title{font-family:var(--serif);font-size:clamp(1.3rem,2.4vw,1.55rem);font-weight:600;color:var(--ink);margin-bottom:0.7rem;line-height:1.25}
+.bc-desc{font-size:0.845rem;color:var(--ink3);line-height:1.85;margin-bottom:1.4rem;flex:1}
+.bc-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.4rem;padding:0.9rem 1rem;background:var(--cream2);border-radius:0.6rem}
+.bc-m{text-align:center;min-width:0}
+.bc-m-val{font-family:var(--serif);font-size:clamp(1.05rem,2vw,1.25rem);font-weight:600;color:var(--sage2);line-height:1}
+.bc-m-label{font-size:0.6rem;color:var(--ink4);letter-spacing:0.07em;text-transform:uppercase;margin-top:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bc-tech{display:flex;flex-wrap:wrap;gap:0.38rem;margin-bottom:1.4rem}
+.bc-pill{font-family:var(--mono);font-size:0.61rem;color:var(--ink3);border:1px solid var(--border);padding:0.18rem 0.6rem;border-radius:2rem;background:var(--cream2)}
+.bc-links{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:auto}
+.bc-link-primary,.bc-link-ghost{
+  display:inline-flex;align-items:center;gap:0.4rem;padding:0.65rem 1.25rem;
+  font-size:0.76rem;font-weight:700;text-decoration:none;border-radius:0.35rem;
+  letter-spacing:0.03em;transition:background 0.2s,transform 0.2s,border-color 0.2s;
+  border:1.5px solid transparent;
+}
+.bc-link-primary{background:var(--sage2);color:#fff}
+.bc-link-primary:hover{background:var(--sage3);transform:translateY(-1px)}
+.bc-link-primary.terra{background:var(--terra)}
+.bc-link-primary.terra:hover{background:var(--terra2)}
+.bc-link-ghost{border-color:var(--border);color:var(--ink2);font-weight:600}
+.bc-link-ghost:hover{border-color:var(--sage);background:rgba(124,154,126,0.05)}
+
+/* ── QA PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem}
+.proj-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:1.1rem;padding:1.7rem;
+  position:relative;overflow:hidden;
+  transition:transform 0.35s,border-color 0.35s,box-shadow 0.35s;
+}
+.proj-card:hover{transform:translateY(-5px);border-color:rgba(124,154,126,0.28);box-shadow:0 12px 36px rgba(44,36,32,0.07)}
+.pc-top{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--sage),var(--terra));opacity:0;transition:opacity 0.35s}
+.proj-card:hover .pc-top{opacity:1}
+.ptags{display:flex;flex-wrap:wrap;gap:0.36rem;margin-bottom:0.85rem}
+.ptag{font-family:var(--mono);font-size:0.6rem;color:var(--sage2);border:1px solid rgba(124,154,126,0.22);padding:0.16rem 0.55rem;border-radius:2rem;background:rgba(124,154,126,0.05)}
+.ptitle{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:0.6rem;line-height:1.25}
+.pdesc{font-size:0.83rem;color:var(--ink3);line-height:1.8;margin-bottom:1.25rem}
+.plink{display:inline-flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.68rem;color:var(--sage2);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s,gap 0.2s}
+.plink:hover{border-color:var(--sage2);gap:0.6rem}
+.pnum{position:absolute;bottom:1.25rem;right:1.5rem;font-family:var(--serif);font-size:2.6rem;font-weight:600;color:rgba(124,154,126,0.05);line-height:1;user-select:none;pointer-events:none}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem}
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1.65rem;position:relative;overflow:hidden;transition:transform 0.35s,border-color 0.35s,box-shadow 0.35s}
+.skill-card:hover{transform:translateY(-4px);border-color:rgba(124,154,126,0.26);box-shadow:0 10px 30px rgba(44,36,32,0.06)}
+.sk-bar{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--sage),var(--terra));transform:scaleX(0);transform-origin:left;transition:transform 0.45s ease}
+.skill-card:hover .sk-bar{transform:scaleX(1)}
+.sk-icon{font-size:1.5rem;margin-bottom:0.85rem}
+.sk-cat{font-family:var(--mono);font-size:0.62rem;color:var(--sage2);text-transform:uppercase;letter-spacing:0.14em;margin-bottom:0.55rem}
+.sk-list{font-size:0.81rem;color:var(--ink3);line-height:1.9}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:0}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--sage),rgba(196,133,106,0.3),transparent)}
+.tl-item{padding-left:2.5rem;margin-bottom:3.5rem;position:relative}
+.tl-item::before{content:'';position:absolute;left:-4.5px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--sage);box-shadow:0 0 0 3px rgba(124,154,126,0.14)}
+.tl-period{font-family:var(--mono);font-size:0.66rem;color:var(--terra);letter-spacing:0.1em;margin-bottom:0.38rem}
+.tl-company{font-size:0.7rem;font-weight:700;color:var(--sage2);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.2rem}
+.tl-role{font-family:var(--serif);font-size:clamp(1.25rem,2.5vw,1.5rem);font-weight:600;color:var(--ink);margin-bottom:0.2rem;line-height:1.2}
+.tl-loc{font-size:0.75rem;color:var(--ink4);margin-bottom:1rem}
+.tl-ul{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
+.tl-ul li{font-size:0.85rem;color:var(--ink3);padding-left:1.3rem;position:relative;line-height:1.75}
+.tl-ul li::before{content:'—';position:absolute;left:0;color:var(--sage);font-size:0.7rem;top:0.28rem}
+.hl{color:var(--ink);font-weight:600}
+
+/* ── CERTS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.9rem}
+.cert-card{background:var(--surface);border:1px solid var(--border);border-radius:0.85rem;padding:1.25rem 1.4rem;display:flex;align-items:center;gap:1rem;text-decoration:none;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
+.cert-card:hover{border-color:rgba(124,154,126,0.28);transform:translateY(-3px);box-shadow:0 7px 22px rgba(44,36,32,0.06)}
+.cert-icon{width:42px;height:42px;flex-shrink:0;border-radius:0.55rem;background:var(--cream2);border:1px solid rgba(124,154,126,0.16);display:flex;align-items:center;justify-content:center;font-size:1.05rem}
+.cert-name{font-size:0.83rem;font-weight:600;line-height:1.4;margin-bottom:0.1rem;color:var(--ink)}
+.cert-issuer{font-size:0.66rem;color:var(--ink4);font-family:var(--mono)}
+
+/* ── EDU ── */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem}
+.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:1rem;padding:1.75rem;position:relative;overflow:hidden;transition:border-color 0.25s,transform 0.25s}
+.edu-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2.5px;background:linear-gradient(to bottom,var(--sage),var(--terra))}
+.edu-card:hover{border-color:rgba(124,154,126,0.26);transform:translateY(-3px)}
+.edu-year{font-family:var(--mono);font-size:0.68rem;color:var(--terra);letter-spacing:0.12em;margin-bottom:0.5rem}
+.edu-degree{font-family:var(--serif);font-size:1.12rem;margin-bottom:0.4rem;font-weight:600;line-height:1.3;color:var(--ink)}
+.edu-inst{font-size:0.79rem;color:var(--ink3)}
+
+/* ── CTA BAND ── */
+.cta-band{
+  background:linear-gradient(135deg,var(--sage3),var(--sage2));
+  padding:4.5rem var(--pad-x);text-align:center;
+  position:relative;z-index:1;overflow:hidden;
+}
+.cta-band::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
+.cta-band h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);color:#fff;margin-bottom:0.85rem;font-weight:600;line-height:1.2}
+.cta-band p{font-size:clamp(0.85rem,1.6vw,0.95rem);color:rgba(255,255,255,0.72);max-width:460px;margin:0 auto 2rem;line-height:1.85}
+.cta-buttons{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.btn-white,.btn-outline-white{
+  display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:0.85rem 1.85rem;font-family:var(--sans);font-weight:700;
+  font-size:0.8rem;text-decoration:none;border-radius:0.4rem;letter-spacing:0.04em;
+  transition:transform 0.2s,box-shadow 0.2s,background 0.25s,border-color 0.25s;
+}
+.btn-white{background:#fff;color:var(--sage2);box-shadow:0 4px 20px rgba(44,36,32,0.15)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(44,36,32,0.2)}
+.btn-outline-white{border:1.5px solid rgba(255,255,255,0.4);color:#fff}
+.btn-outline-white:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.65);transform:translateY(-2px)}
+
+/* ── CONTACT ── */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:start}
+.contact-head{font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.4rem);font-weight:600;line-height:1.25;margin-bottom:1.1rem;color:var(--ink)}
+.contact-head em{color:var(--sage2);font-style:italic}
+.contact-sub{font-size:0.87rem;color:var(--ink3);max-width:380px;line-height:1.85}
+.contact-items{display:flex;flex-direction:column;gap:1rem}
+.c-item{display:flex;align-items:center;gap:1rem;font-size:0.86rem;color:var(--ink3);min-width:0}
+.c-icon{width:42px;height:42px;flex-shrink:0;border-radius:0.6rem;border:1px solid var(--border);background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:0.95rem;transition:border-color 0.2s,background 0.2s}
+.c-item:hover .c-icon{border-color:rgba(124,154,126,0.3);background:rgba(124,154,126,0.08)}
+.c-item a{color:var(--ink3);text-decoration:none;transition:color 0.2s;word-break:break-word;overflow-wrap:anywhere}
+.c-item a:hover{color:var(--sage2)}
+.socials{display:flex;gap:0.65rem;margin-top:1.25rem;flex-wrap:wrap}
+.soc-btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.15rem;border:1.5px solid rgba(44,36,32,0.15);color:var(--ink2);font-size:0.74rem;font-weight:600;text-decoration:none;border-radius:0.5rem;transition:border-color 0.25s,color 0.25s,background 0.25s,transform 0.2s}
+.soc-btn:hover{border-color:var(--sage);color:var(--sage2);background:rgba(124,154,126,0.06);transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+footer{padding:1.5rem var(--pad-x);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;font-size:0.72rem;color:var(--ink4);font-family:var(--mono);position:relative;z-index:1;background:var(--cream2);flex-wrap:wrap}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+
+/* Tablet & smaller desktop */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr 1fr;gap:2rem;padding-top:7rem}
+  .avatar-scene{width:clamp(200px,30vw,260px)}
+  .ft1,.ft2{font-size:0.55rem;padding:0.22rem 0.6rem}
+}
+
+/* Mobile breakpoint — switch to hamburger */
+@media(max-width:820px){
+  nav{padding:0.9rem 1.25rem}
+  nav.scrolled{padding:0.7rem 1.25rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-logo{font-size:0.95rem}
+  .nav-logo small{display:none}
+
+  .hero{
+    grid-template-columns:1fr;
+    padding:6.5rem 1.5rem 3rem;
+    gap:2.5rem;
+    text-align:left;
+    min-height:auto;
+  }
+  .hero-visual{order:-1;margin-bottom:0.5rem}
+  .avatar-scene{width:min(220px,55vw)}
+  .ftag{font-size:0.58rem}
+
+  .hero-ctas{gap:0.6rem}
+  .btn-primary,.btn-terra,.btn-ghost{padding:0.78rem 1.4rem;font-size:0.75rem;flex:1 1 auto;min-width:140px}
+
+  .stats-row{gap:1.5rem;justify-content:space-between}
+  .stat-label{font-size:0.6rem}
+
+  .trust-bar{padding:2rem 1.5rem;gap:1.25rem;grid-template-columns:1fr 1fr}
+
+  .services-strip{padding:3.5rem 1.5rem}
+  .services-grid{grid-template-columns:1fr;gap:1rem}
+
+  section{padding:4rem 1.5rem}
+  .sec-title{margin-bottom:2.2rem}
+
+  .built-grid{grid-template-columns:1fr;gap:1.25rem}
+  .bc-header{padding:1.5rem 1.5rem 1rem}
+  .bc-body{padding:1.4rem 1.5rem 1.6rem}
+  .bc-metrics{padding:0.8rem 0.8rem;gap:0.5rem}
+  .bc-m-val{font-size:1.05rem}
+
+  .proj-grid{grid-template-columns:1fr;gap:1rem}
+  .skills-grid{grid-template-columns:1fr 1fr;gap:0.85rem}
+  .skill-card{padding:1.35rem}
+  .certs-grid{grid-template-columns:1fr;gap:0.75rem}
+  .edu-grid{grid-template-columns:1fr;gap:1rem}
+
+  .timeline::before{left:5px}
+  .tl-item{padding-left:2.2rem;margin-bottom:2.5rem}
+  .tl-item::before{left:0.5px}
+
+  .cta-band{padding:3.5rem 1.5rem}
+  .cta-buttons{flex-direction:column;align-items:stretch}
+  .btn-white,.btn-outline-white{width:100%;padding:0.85rem 1rem}
+
+  .contact-wrap{grid-template-columns:1fr;gap:2rem}
+  .contact-items{gap:0.85rem}
+  .c-item{font-size:0.8rem;gap:0.85rem}
+  .c-icon{width:38px;height:38px;font-size:0.9rem}
+  .socials{gap:0.5rem}
+  .soc-btn{padding:0.55rem 1rem;font-size:0.7rem}
+
+  footer{flex-direction:column;gap:0.5rem;padding:1.25rem 1.5rem;text-align:center;font-size:0.65rem}
+}
+
+/* Very small phones */
+@media(max-width:380px){
+  .hero{padding:6rem 1rem 2.5rem}
+  section{padding:3.5rem 1rem}
+  .trust-bar{grid-template-columns:1fr;padding:2rem 1rem}
+  .skills-grid{grid-template-columns:1fr}
+  .stats-row{gap:1rem}
+  .hero-ctas .btn-primary,.hero-ctas .btn-terra,.hero-ctas .btn-ghost{width:100%}
+  .nav-logo{font-size:0.85rem}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.15s !important}
+  .av-ring,.dc3{animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <span class="nav-logo">Hammad Rahaman <small>// builder & QA</small></span>
+
+  <ul class="nav-links">
+    <li><a href="#built">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me →</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#built">Work</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#skills">Skills</a>
+  <a href="#contact" class="cta">Hire Me →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="border-top:none">
+  <div class="hero-deco">
+    <div class="dc dc1"></div><div class="dc dc2"></div><div class="dc dc3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="bdot"></div>Available for projects · Bengaluru, India</div>
+    <h1 class="hero-name">Hammad<br/><em>Rahaman</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-role">Senior QA Engineer &amp; Full-Stack Builder</p>
+    <p class="hero-value">I build <em>web apps, mobile apps</em><br/>and make sure they work perfectly.</p>
+    <p class="hero-desc">From a fully functional café web app to a Quran app live on Google Play — I design, build, and ship real products. With 7+ years in QA, everything I build is tested to production-grade standards.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Let's work together →</a>
+      <a href="#built" class="btn-terra">See my work</a>
+      <a href="https://github.com/hammadrahaman" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num"><span data-count="7">0</span><sup>+</sup></div><div class="stat-label">Years exp.</div></div>
+      <div class="stat"><div class="stat-num"><span data-count="2">0</span><sup></sup></div><div class="stat-label">Live products</div></div>
+      <div class="stat"><div class="stat-num"><span data-count="100">0</span><sup>+</sup></div><div class="stat-label">App downloads</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="avatar-scene">
+      <div class="av-glow"></div>
+      <div class="av-ring"><div class="av-pip"></div></div>
+      <div class="av-ring2"></div>
+      <div class="av-frame">
+        <img src="https://hammadrahaman.github.io/HammadCV/Teams-Pic.jpeg" alt="Hammad Rahaman"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="av-fallback" style="display:none">HR</div>
+      </div>
+      <div class="ftag ft1">🚀 2 live products</div>
+      <div class="ftag ft2">✅ ISTQB Certified</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-icon">☕</div>
+    <div class="trust-text"><strong>Zish Café Web App</strong>Live on Vercel · Menu ordering</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">📖</div>
+    <div class="trust-text"><strong>Iqra Quran Daily</strong>4.6★ · Google Play · 100+ downloads</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🛡️</div>
+    <div class="trust-text"><strong>ISTQB Certified</strong>Foundation Level · Senior QA</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🏢</div>
+    <div class="trust-text"><strong>7+ Years</strong>Optym · Accenture · IBM</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-strip" id="services">
+  <div class="strip-title">What I can build for you</div>
+  <p class="strip-sub">Whether you need a stunning website, a mobile app, or want your existing product tested and bulletproofed — I've got you covered end to end.</p>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-name">Web Apps & Websites</div>
+      <div class="svc-desc">Restaurant menus, portfolios, business sites, dashboards — fully responsive and production-ready.</div>
+      <span class="svc-tag">React · Next.js · Vercel</span>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.07s">
+      <div class="svc-icon">📱</div>
+      <div class="svc-name">Mobile Apps</div>
+      <div class="svc-desc">Android apps published to Google Play. Built and shipped Iqra Quran Daily with offline support, audio & streaks.</div>
+      <span class="svc-tag">React Native · Android</span>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.14s">
+      <div class="svc-icon">🔍</div>
+      <div class="svc-name">QA & Testing</div>
+      <div class="svc-desc">End-to-end test automation, bug hunting, and quality audits. I find what breaks before your users do.</div>
+      <span class="svc-tag">Selenium · Cypress · TestNG</span>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.21s">
+      <div class="svc-icon">⚡</div>
+      <div class="svc-name">API Development & Testing</div>
+      <div class="svc-desc">Build or validate REST APIs. 200+ endpoints automated at Optym, reducing effort by 70%.</div>
+      <span class="svc-tag">Rest Assured · Postman · Java</span>
+    </div>
+  </div>
+</div>
+
+<!-- BUILT PROJECTS -->
+<section id="built" style="background:var(--cream2)">
+  <div class="sec-eyebrow">// real products shipped</div>
+  <h2 class="sec-title reveal">Things I've <em>built &amp; launched</em></h2>
+  <div class="built-grid">
+
+    <!-- ZISH CAFE -->
+    <div class="built-card reveal">
+      <div class="bc-header cafe">
+        <div class="zish-logo">
+          <div class="zish-icon">
+            <div class="zish-steam"><span></span><span></span><span></span></div>
+            <div class="zish-cup"></div>
+          </div>
+          <div class="zish-text">
+            <div class="zish-name">Zish Cafe</div>
+            <div class="zish-since">Since 2025</div>
+          </div>
+        </div>
+        <div class="bc-badges">
+          <span class="bc-badge live">🟢 Live</span>
+          <span class="bc-badge" style="border:1px solid rgba(196,84,28,0.3);color:var(--zish);background:rgba(230,84,28,0.06)">Web App</span>
+          <span class="bc-badge" style="border:1px solid rgba(196,84,28,0.3);color:var(--zish);background:rgba(230,84,28,0.06)">React</span>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-type">Web Application</div>
+        <div class="bc-title">Zish Café — Digital Menu &amp; Ordering</div>
+        <p class="bc-desc">A full-featured café web app with a dynamic digital menu, ordering system, and a clean browsing experience. Designed for real restaurant use — fast, mobile-friendly, and deployed live on Vercel.</p>
+        <div class="bc-metrics">
+          <div class="bc-m"><div class="bc-m-val">Live</div><div class="bc-m-label">Status</div></div>
+          <div class="bc-m"><div class="bc-m-val">100%</div><div class="bc-m-label">Responsive</div></div>
+          <div class="bc-m"><div class="bc-m-val">Vercel</div><div class="bc-m-label">Deployed</div></div>
+        </div>
+        <div class="bc-tech">
+          <span class="bc-pill">React</span><span class="bc-pill">Next.js</span><span class="bc-pill">Vercel</span><span class="bc-pill">Responsive UI</span>
+        </div>
+        <div class="bc-links">
+          <a href="https://zishwebapp.vercel.app/" target="_blank" rel="noopener" class="bc-link-primary">View Live Site →</a>
+          <a href="#contact" class="bc-link-ghost">Build similar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- IQRA QURAN DAILY -->
+    <div class="built-card reveal" style="transition-delay:.1s">
+      <div class="bc-header quran">
+        <div class="iqra-icon-wrap">
+          <img class="iqra-app-icon" src="https://play-lh.googleusercontent.com/4FzDRvEby9eO8oNceMHbpo1itV3pm7TyOkKtrnRcmo5usLxbdY5SbsIbd7sJOYqBrgUZfgVuGQn6z5_eXdYGDyQ=w120-h120" alt="Iqra Quran Daily" onerror="this.style.background='linear-gradient(135deg,#2d4a35,#1a3024)'"/>
+          <div>
+            <div class="iqra-name">Iqra Quran Daily</div>
+            <div class="iqra-tag">Hafsa Rahman · Books & Reference</div>
+          </div>
+        </div>
+        <div class="bc-badges">
+          <span class="bc-badge dark live">⭐ 4.6 Rating</span>
+          <span class="bc-badge dark play">Google Play</span>
+          <span class="bc-badge dark">100+ Downloads</span>
+        </div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-type">Android Mobile App</div>
+        <div class="bc-title">Iqra Quran Daily — Islamic Companion App</div>
+        <p class="bc-desc">Complete offline Quran app with Arabic text, English translation, audio recitation by Al-Sudais, daily streak tracking, bookmarks, and a Hasanat counter. Published on Google Play with 4.6★ rating.</p>
+        <div class="bc-metrics">
+          <div class="bc-m"><div class="bc-m-val">4.6★</div><div class="bc-m-label">Play Store</div></div>
+          <div class="bc-m"><div class="bc-m-val">100+</div><div class="bc-m-label">Downloads</div></div>
+          <div class="bc-m"><div class="bc-m-val">8</div><div class="bc-m-label">Reviews</div></div>
+        </div>
+        <div class="bc-tech">
+          <span class="bc-pill">React Native</span><span class="bc-pill">Android</span><span class="bc-pill">Offline</span><span class="bc-pill">Audio</span>
+        </div>
+        <div class="bc-links">
+          <a href="https://play.google.com/store/apps/details?id=com.hammadrahaman.iqraqurandaily" target="_blank" rel="noopener" class="bc-link-primary terra">View on Play Store →</a>
+          <a href="#contact" class="bc-link-ghost">Build an app</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QA PROJECTS -->
+<section id="qa-projects">
+  <div class="sec-eyebrow">// automation frameworks</div>
+  <h2 class="sec-title reveal">QA <em>projects</em></h2>
+  <div class="proj-grid">
+    <div class="proj-card reveal" style="transition-delay:.05s">
+      <div class="pc-top"></div>
+      <div class="ptags"><span class="ptag">Cypress</span><span class="ptag">API</span><span class="ptag">TMS</span></div>
+      <div class="ptitle">Cypress TMS Automation Framework</div>
+      <p class="pdesc">API automation for a Transportation Management System — order creation, geo-validation via Trimble Maps, Invoice Sync testing across 200+ endpoints.</p>
+      <a href="https://github.com/hammadrahaman/HammadLFrameWork" target="_blank" rel="noopener" class="plink">View on GitHub →</a>
+      <div class="pnum">01</div>
+    </div>
+    <div class="proj-card reveal" style="transition-delay:.12s">
+      <div class="pc-top"></div>
+      <div class="ptags"><span class="ptag">Cypress</span><span class="ptag">JavaScript</span><span class="ptag">UI</span></div>
+      <div class="ptitle">Instagram UI Automation</div>
+      <p class="pdesc">Cypress automation framework for Instagram web app validating login, posting, and navigation. Custom commands reduced duplication by 50%.</p>
+      <a href="https://github.com/hammadrahaman/InstaCypress" target="_blank" rel="noopener" class="plink">View on GitHub →</a>
+      <div class="pnum">02</div>
+    </div>
+    <div class="proj-card reveal" style="transition-delay:.19s">
+      <div class="pc-top"></div>
+      <div class="ptags"><span class="ptag">Selenium</span><span class="ptag">Java</span><span class="ptag">TestNG</span></div>
+      <div class="ptitle">Selenium Web Automation Framework</div>
+      <p class="pdesc">Page Object Model framework with data-driven testing via TestNG + Apache POI, enabling multi-dataset execution for registration workflows.</p>
+      <a href="https://github.com/hammadrahaman/selenium-test-suit" target="_blank" rel="noopener" class="plink">View on GitHub →</a>
+      <div class="pnum">03</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--cream2)">
+  <div class="sec-eyebrow">// where I've worked</div>
+  <h2 class="sec-title reveal">Career <em>timeline</em></h2>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-period">Dec 2021 — Present</div>
+      <div class="tl-company">Optym</div>
+      <div class="tl-role">Senior Quality Assurance Engineer</div>
+      <div class="tl-loc">Bangalore, India</div>
+      <ul class="tl-ul">
+        <li>Led end-to-end QA for <span class="hl">LoadOps</span>, achieving <span class="hl">zero production defects</span> across 6 consecutive sprints.</li>
+        <li>Architected Selenium + TestNG POM framework — <span class="hl">75% test coverage</span>, regression down from 3 days → 8 hours.</li>
+        <li>Built <span class="hl">Rest Assured API suite</span> covering 200+ endpoints, reducing effort by 70%.</li>
+        <li>UAT initiatives achieving <span class="hl">95% customer satisfaction</span>.</li>
+        <li>Mentored 3 junior engineers, boosting team productivity by <span class="hl">35%</span>.</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal" style="transition-delay:.1s">
+      <div class="tl-period">Dec 2020 — Dec 2021</div>
+      <div class="tl-company">Accenture</div>
+      <div class="tl-role">SW/APP/Cloud/QA Associate</div>
+      <div class="tl-loc">Bangalore, India</div>
+      <ul class="tl-ul">
+        <li>Documented <span class="hl">150+ defects</span> with severity classification for enterprise cloud apps.</li>
+        <li>Maintained <span class="hl">100% requirement coverage</span> across test documentation.</li>
+        <li>Validated across <span class="hl">15+ iOS &amp; Android configurations</span>.</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal" style="transition-delay:.2s">
+      <div class="tl-period">Feb 2019 — Mar 2020</div>
+      <div class="tl-company">IBM India Private Limited</div>
+      <div class="tl-role">Technical Cloud Support Associate</div>
+      <div class="tl-loc">Bangalore, India</div>
+      <ul class="tl-ul">
+        <li>Tested <span class="hl">NAB Bank</span> app serving 100K+ customers.</li>
+        <li>Achieved <span class="hl">95% first-time fix rate</span>.</li>
+        <li>Reduced client downtime by 40% through root cause analysis.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-eyebrow">// skills & tools</div>
+  <h2 class="sec-title reveal">Technical <em>skill set</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal" style="transition-delay:.04s"><div class="sk-icon">⚙️</div><div class="sk-cat">Test Automation</div><div class="sk-list">Selenium · Cypress · TestNG · JUnit · Jenkins CI/CD</div><div class="sk-bar"></div></div>
+    <div class="skill-card reveal" style="transition-delay:.09s"><div class="sk-icon">🔌</div><div class="sk-cat">API Testing</div><div class="sk-list">Rest Assured · Postman · SoapUI · API integration</div><div class="sk-bar"></div></div>
+    <div class="skill-card reveal" style="transition-delay:.14s"><div class="sk-icon">💻</div><div class="sk-cat">Programming</div><div class="sk-list">Java · JavaScript · Python · SQL · HTML/CSS</div><div class="sk-bar"></div></div>
+    <div class="skill-card reveal" style="transition-delay:.19s"><div class="sk-icon">📱</div><div class="sk-cat">App Development</div><div class="sk-list">React Native · Android · Google Play publishing</div><div class="sk-bar"></div></div>
+    <div class="skill-card reveal" style="transition-delay:.24s"><div class="sk-icon">🌐</div><div class="sk-cat">Web Development</div><div class="sk-list">React · Next.js · Vercel · Responsive design</div><div class="sk-bar"></div></div>
+    <div class="skill-card reveal" style="transition-delay:.29s"><div class="sk-icon">🧑‍💼</div><div class="sk-cat">Leadership</div><div class="sk-list">Agile · Scrum · Mentoring · Sprint planning</div><div class="sk-bar"></div></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section style="background:var(--cream2)">
+  <div class="sec-eyebrow">// credentials</div>
+  <h2 class="sec-title reveal">Verified <em>certifications</em></h2>
+  <div class="certs-grid">
+    <a class="cert-card reveal" href="https://hammadrahaman.github.io/HammadCV/ISTQB_HammadUrRahamanR%20(1).pdf" target="_blank" rel="noopener" style="transition-delay:.04s"><div class="cert-icon">📜</div><div><div class="cert-name">ISTQB Certified Tester – Foundation Level</div><div class="cert-issuer">ISTQB · CTFL</div></div></a>
+    <a class="cert-card reveal" href="https://hammadrahaman.github.io/HammadCV/UC-ad80d384-cf1b-4d36-ae81-e0c8d3fd4024.pdf" target="_blank" rel="noopener" style="transition-delay:.09s"><div class="cert-icon">🐍</div><div><div class="cert-name">Selenium WebDriver with Python</div><div class="cert-issuer">Udemy</div></div></a>
+    <a class="cert-card reveal" href="https://udemy-certificate.s3.amazonaws.com/pdf/UC-bd89b8b1-dad4-4c83-8207-a172f57b28b1.pdf" target="_blank" rel="noopener" style="transition-delay:.14s"><div class="cert-icon">🌲</div><div><div class="cert-name">Cypress Automation Testing</div><div class="cert-issuer">Udemy</div></div></a>
+    <a class="cert-card reveal" href="https://www.hackerrank.com/certificates/faced29f3605" target="_blank" rel="noopener" style="transition-delay:.19s"><div class="cert-icon">⭐</div><div><div class="cert-name">Python (Basic)</div><div class="cert-issuer">HackerRank</div></div></a>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section>
+  <div class="sec-eyebrow">// education</div>
+  <h2 class="sec-title reveal">Academic <em>background</em></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal" style="transition-delay:.05s"><div class="edu-year">2017</div><div class="edu-degree">B.E. — Electronics &amp; Communications Engineering</div><div class="edu-inst">CMR Institute of Technology, Bengaluru</div></div>
+    <div class="edu-card reveal" style="transition-delay:.12s"><div class="edu-year">2014</div><div class="edu-degree">Diploma — Electronics &amp; Communications Engineering</div><div class="edu-inst">Government Polytechnic</div></div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Ready to build your next product?</h2>
+  <p>Whether it's a restaurant web app, a mobile app for the Play Store, or a quality audit of your existing product — let's talk. I'm available for freelance projects right now.</p>
+  <div class="cta-buttons">
+    <a href="mailto:hammadrahman94@gmail.com" class="btn-white">📩 Email me today</a>
+    <a href="https://wa.me/919741160846" target="_blank" rel="noopener" class="btn-outline-white">💬 WhatsApp me</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-eyebrow">// get in touch</div>
+  <div class="contact-wrap">
+    <div class="reveal">
+      <h2 class="contact-head">Let's build something <em>great</em> together.</h2>
+      <p class="contact-sub">Have an idea for a web app, mobile app, or need your product tested? I'm available for freelance projects. Response within 24 hours, always.</p>
+    </div>
+    <div class="contact-items reveal" style="transition-delay:.1s">
+      <div class="c-item"><div class="c-icon">✉️</div><a href="mailto:hammadrahman94@gmail.com">hammadrahman94@gmail.com</a></div>
+      <div class="c-item"><div class="c-icon">📞</div><a href="tel:+919741160846">+91-9741160846</a></div>
+      <div class="c-item"><div class="c-icon">💬</div><a href="https://wa.me/919741160846" target="_blank" rel="noopener">WhatsApp me</a></div>
+      <div class="c-item"><div class="c-icon">📍</div><span>Bengaluru, India · Available remotely</span></div>
+      <div class="socials">
+        <a href="https://github.com/hammadrahaman" target="_blank" rel="noopener" class="soc-btn">GitHub →</a>
+        <a href="https://play.google.com/store/apps/details?id=com.hammadrahaman.iqraqurandaily" target="_blank" rel="noopener" class="soc-btn">Play Store →</a>
+        <a href="https://zishwebapp.vercel.app/" target="_blank" rel="noopener" class="soc-btn">Live Work →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Hammad Rahaman — Senior QA Engineer &amp; Builder</span>
+  <span>Bengaluru, India · 2025</span>
+</footer>
+
+<script>
+/* BACKGROUND CANVAS — soft drifting blobs */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth * window.devicePixelRatio;
+  H = canvas.height = window.innerHeight * window.devicePixelRatio;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+}
+resize();
+window.addEventListener('resize', () => { ctx.setTransform(1,0,0,1,0,0); resize(); });
+
+const isMobile = window.innerWidth < 768;
+const blobCount = isMobile ? 12 : 22;
+const blobs = Array.from({length: blobCount}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  r: Math.random() * 130 + 50,
+  speed: Math.random() * 0.15 + 0.04,
+  angle: Math.random() * Math.PI * 2,
+  color: Math.random() > 0.5 ? '124,154,126' : '196,133,106',
+  alpha: Math.random() * 0.035 + 0.012,
+}));
+function drawBg() {
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  blobs.forEach(b => {
+    b.angle += b.speed * 0.004;
+    b.x += Math.cos(b.angle) * 0.25;
+    b.y += Math.sin(b.angle) * 0.18;
+    if (b.x > window.innerWidth + b.r) b.x = -b.r;
+    if (b.x < -b.r) b.x = window.innerWidth + b.r;
+    if (b.y > window.innerHeight + b.r) b.y = -b.r;
+    if (b.y < -b.r) b.y = window.innerHeight + b.r;
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${b.color},${b.alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+/* NAV SCROLL */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+/* HAMBURGER */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+function toggleMenu(force) {
+  const isOpen = force !== undefined ? force : !mobileMenu.classList.contains('open');
+  mobileMenu.classList.toggle('open', isOpen);
+  hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+hamburger.addEventListener('click', () => toggleMenu());
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => toggleMenu(false));
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+/* SCROLL REVEAL */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* COUNT-UP */
+function countUp(el, target) {
+  let s = null; const dur = 1500;
+  const step = ts => {
+    if (!s) s = ts;
+    const p = Math.min((ts - s) / dur, 1);
+    const e = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.floor(e * target);
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const co = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { countUp(e.target, +e.target.dataset.count); co.unobserve(e.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+</script>
+</body>
+</html>
